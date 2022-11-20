@@ -4,13 +4,13 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.support.ui.Select;
+
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 
+public class Login {
 
-public class CreateLead {
-	public static void main(String[] args) throws   InterruptedException{
+	public static void main(String[] args) throws InterruptedException {
 		// setup the browser driver
 		WebDriverManager.chromedriver().setup();
 		
@@ -18,15 +18,15 @@ public class CreateLead {
 		ChromeDriver driver=new ChromeDriver();
 		
 		//Load the URL
-		driver.get("http://leaftaps.com/opentaps/control/login");
+		driver.get("http://leaftaps.com/opentaps");
 		
 		//Maximize the browser 
 		driver.manage().window().maximize();
 	
-	
 		WebElement eleUserName = driver.findElement(By.id("username"));
 		eleUserName.sendKeys("DemoSalesManager");
-        driver.findElement(By.id("password")).sendKeys("crmsfa");
+		
+		driver.findElement(By.id("password")).sendKeys("crmsfa");
 		
 		driver.findElement(By.className("decorativeSubmit")).sendKeys(Keys.ENTER);
 		
@@ -42,22 +42,26 @@ public class CreateLead {
 		
 		driver.findElement(By.id("createLeadForm_lastName")).sendKeys("J");
 		
-		driver.findElement(By.id("createLeadForm_departmentName")).sendKeys("CSE");
+		driver.findElement(By.name("submitButton")).click();
 		
-		driver.findElement(By.id("createLeadForm_description")).sendKeys("TestLeaf- Always Ahead");
-		
-		driver.findElement(By.id("createLeadForm_primaryEmail")).sendKeys("nandhinijegan@gmail.com");
-		
-		WebElement stateTool = driver.findElement(By.id("createLeadForm_generalStateProvinceGeoId"));
-		Select aa=new Select(stateTool);
-	    aa.selectByVisibleText("Hawaii");
-	    driver.findElement(By.className("smallSubmit")).click();
-	    
-	    System.out.println("The Title is: "+driver.getTitle());
-		Thread.sleep(2000);
-		  driver.close();
-		   
+
+		String text = driver.findElement(By.id("viewLead_firstName_sp")).getText();
+		if(text.equals("Nandhini")) {
+			System.out.println("First name is correct");
+		} else {
+			System.out.println("First name is incorrect");
 		}
 		
-        
+		// close the browser
+		Thread.sleep(2000);
+		driver.close();
+		
+		WebElement ele = driver.findElement(By.id("viewLead_firstName_sp"));
+		ele.clear();
+		ele.sendKeys("test");
+		ele.sendKeys(Keys.TAB);
+	}
+
 }
+
+
